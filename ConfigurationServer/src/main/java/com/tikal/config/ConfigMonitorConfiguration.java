@@ -1,4 +1,4 @@
-package server.config;
+package com.tikal.config;
 
 import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
