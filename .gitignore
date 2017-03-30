@@ -1,0 +1,15 @@
+DiscoveryServer/.idea/
+DiscoveryServer/target/
+DiscoveryServer/DiscoveryServer.iml
+
+StockService/.idea/
+StockService/target/
+StockService/StockService.iml
+
+ConfigurationServer/.idea/
+ConfigurationServer/target/
+ConfigurationServer/ConfigurationServer.iml
+
+
+
+

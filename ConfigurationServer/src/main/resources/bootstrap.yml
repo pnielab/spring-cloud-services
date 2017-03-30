@@ -1,0 +1,49 @@
+server:
+  port: 8888
+  host: localhost
+
+logging:
+  level:
+    org.springframework.cloud: 'DEBUG'
+
+
+spring:
+  application:
+    name: configserver
+  cloud:
+    bus:
+      enabled: false
+    config:
+      server:
+        git:
+          uri: ${user_home}/pniel-cloud-client-repo
+
+                #user_home system variable:
+                #https://github.com/pnielab
+                #or local git but clone it
+                #C:\
+
+---
+spring:
+  profiles: config-monitor
+  cloud:
+    bus:
+      enabled: true
+    stream:
+       bindings:
+         springCloudBusInput:
+           destination: springCloudBus
+           group: input
+
+  rabbitmq:
+  host: localhost
+  port: 15672
+  #username: guest
+  #password: guest
+
+  #  dynamic: true
+  #spring.rabbitmq.virtual-host=cep-host
+
+
+
+

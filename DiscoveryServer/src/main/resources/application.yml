@@ -1,0 +1,32 @@
+eureka:
+  environment: ${environment}
+  datacenter: ${dataCenter}
+  enableSelfPreservation: false
+  server:
+    eviction-interval-timer-in-ms: 1000
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:${server.port}/eureka/
+      # fix this to get peerUrls instead get java.net.URISyntaxException: Illegal character in path at index 1: ${peerUrls}/
+  instance:
+    hostname: ${hostName}
+    statusPageUrlPath: ${management.contextPath}/info
+    healthCheckUrlPath: ${management.contextPath}/health
+    preferIpAddress: true
+    metadataMap:
+      instanceId: ${spring.application.name}:${server.port}
+
+---
+spring:
+  profiles: standalone
+hostName: localhost
+environment: local
+dataCenter: ${hostName}
+peerUrls: http://localhost:${appPort}/eureka
+
+---
+spring:
+  profiles: peerAware
+ #-DappPort=<port> -DhostName=<hostname> -DdataCenter=<data center> -e environment=<dev|test|staging|prod> -DpeerUrls=http://host1:port1/eureka/,http://host2:port2/eureka/,...
