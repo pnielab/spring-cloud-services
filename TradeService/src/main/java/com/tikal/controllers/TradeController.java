@@ -18,7 +18,7 @@ public class TradeController {
     @Autowired
     private RestTemplate loadBalancer;
 
-    @RequestMapping(value = "stock/{symbol}", method = RequestMethod.GET)
+    @RequestMapping(value = "/stock/{symbol}", method = RequestMethod.GET)
     public String getStockBySymbol(@PathVariable(value = "symbol") String symbol) {
         String path = String.format("http://%s%s", Paths.STOCK_SERVICE_RIBBON_NAME, Paths.STOCK_BY_SYMBOL_PATH);
         return loadBalancer.getForObject(path, String.class, symbol);
