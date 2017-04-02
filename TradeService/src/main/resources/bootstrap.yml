@@ -1,6 +1,22 @@
 server:
   port: 8001
-
 spring:
   application:
-    mame: tradeService
+    name: tradeService
+  cloud:
+    config:
+      uri: http://localhost:8888
+      enabled: true
+      failFast: true
+
+
+management:
+  security:
+    enabled: false
+
+
+---
+spring:
+  prifiles:
+    active: development
+
