@@ -1,0 +1,8 @@
+ribbon-for-stockService:
+  ribbon:
+    # Eureka vipAddress of the target service
+    DeploymentContextBasedVipAddresses: stockService
+    #listOfServers: localhost:${SERVER.PORT}
+    ListOfServers: localhost:8761
+    # Interval to refresh the server list from the source (ms)
+    ServerListRefreshInterval: 30000

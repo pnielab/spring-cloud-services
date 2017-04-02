@@ -10,6 +10,9 @@ ConfigurationServer/.idea/
 ConfigurationServer/target/
 ConfigurationServer/ConfigurationServer.iml
 
+TradeService/.idea/
+TradeService/target/
+TradeService/TradeService.iml
 
 
 
