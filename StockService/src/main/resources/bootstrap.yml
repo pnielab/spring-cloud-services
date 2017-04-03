@@ -1,6 +1,5 @@
 server:
-  port: 8080
----
+  port: ${port:8080}
 spring:
   application:
     name: stockService
@@ -13,10 +12,9 @@ spring:
   profiles: known-config-server
   cloud:
     config:
-      uri: http://localhost:8888
+      uri: ${configurationServerPath:http://localhost:8888}
       enabled: true
       failFast: true
-hostName: localhost
 ---
 spring:
   profiles: registered-config-server
@@ -25,16 +23,17 @@ spring:
       discovery:
         enabled: true
         serviceId: configserver
-hostName: localhost
 ---
 spring:
   profiles: development
 hostName: localhost
+port: 8083
+configurationServerPath: http://localhost:8882
+serviceDiscoveryPath: http://localhost:8761/eureka/
 ---
 spring:
   profiles: production
 hostName: localhost
----
-spring:
-  prifiles:
-    active: registered-config-server, development, production
+port: 8084
+configurationServerPath: http://localhost:8888
+serviceDiscoveryPath: http://localhost:8761/eureka/

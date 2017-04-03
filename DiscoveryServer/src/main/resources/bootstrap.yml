@@ -1,7 +1,19 @@
 server:
-  port: 8761
-
+  port: ${port:8761}
+---
 logging:
   level:
     com.netflix.eureka: 'WARN'
     com.netflix.discovery: 'WARN'
+---
+spring:
+  profiles: standalone
+hostName: localhost
+environment: local
+dataCenter: ${hostName}
+peerUrls: http://localhost:${port:8761}/eureka
+port: 8761
+---
+spring:
+  profiles: peerAware
+ #-DappPort=<port> -DhostName=<hostname> -DdataCenter=<data center> -e environment=<dev|test|staging|prod> -DpeerUrls=http://host1:port1/eureka/,http://host2:port2/eureka/,...

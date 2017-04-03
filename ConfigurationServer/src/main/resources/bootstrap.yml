@@ -1,6 +1,5 @@
 server:
-  port: 8888
-  host: localhost
+  port: ${port:8888}
 
 logging:
   level:
@@ -16,7 +15,6 @@ spring:
       server:
         git:
           uri: ${user_home}/pniel-cloud-client-repo
-
 ---
 spring:
   profiles: config-monitor
@@ -30,8 +28,8 @@ spring:
            group: input
 
   rabbitmq:
-  host: localhost
-  port: 15672
+  host: ${rabbitHost:localhost}
+  port: ${rabbitPort:15672}
   #username: guest
   #password: guest
 
@@ -46,9 +44,9 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${serviceDiscoveryPath:http://localhost:8761/eureka/}
   instance:
-  hostname: ${hostName}
+  hostname: ${hostName:localhost}
   statusPageUrlPath: ${management.context-path}/info
   healthCheckUrlPath: ${management.context-path}/health
   preferIpAddress: true
@@ -56,6 +54,14 @@ eureka:
     instanceId: ${spring.application.name}:${server.port}
 ---
 spring:
+  profiles: development
+port: 8888
+serviceDiscoveryPath: http://localhost:8761/eureka/
+hostName: localhost
+rabbitHost: localhost
+rabbitPort: 15672
+---
+spring:
   profiles:
-    active: config-monitor, registration-first
+    active: config-monitor, registration-first, development
 
