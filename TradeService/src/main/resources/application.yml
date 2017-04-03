@@ -1,3 +1,5 @@
+hostName: address from bootstrap.yml
+
 ribbon-for-stockService:
   ribbon:
     # Eureka vipAddress of the target service
@@ -6,3 +8,19 @@ ribbon-for-stockService:
     ListOfServers: localhost:8761
     # Interval to refresh the server list from the source (ms)
     ServerListRefreshInterval: 30000
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: ${hostName}
+    statusPageUrlPath: ${server.servlet-path}/info
+    healthCheckUrlPath: ${server.servlet-path}/health
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 5
+    metadataMap:
+      instanceId: ${spring.application.name}:${server.port}

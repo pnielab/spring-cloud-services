@@ -1,3 +1,4 @@
+hostName: a local host address from boostrap
 eureka:
   client:
     registerWithEureka: true
@@ -13,13 +14,3 @@ eureka:
     leaseExpirationDurationInSeconds: 5
     metadataMap:
       instanceId: ${spring.application.name}:${server.port}
-
----
-spring:
-  profiles: development
-hostName: localhost
-
----
-spring:
-  profiles: production
-hostName: localhost

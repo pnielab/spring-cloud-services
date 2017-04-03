@@ -3,5 +3,5 @@ server:
 
 logging:
   level:
-    com.netflix.eureka: 'DEBUG'
-    com.netflix.discovery: 'DEBUG'
+    com.netflix.eureka: 'WARN'
+    com.netflix.discovery: 'WARN'

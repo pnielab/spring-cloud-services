@@ -6,7 +6,6 @@ logging:
   level:
     org.springframework.cloud: 'DEBUG'
 
-
 spring:
   application:
     name: configserver
@@ -17,11 +16,6 @@ spring:
       server:
         git:
           uri: ${user_home}/pniel-cloud-client-repo
-
-                #user_home system variable:
-                #https://github.com/pnielab
-                #or local git but clone it
-                #C:\
 
 ---
 spring:
@@ -44,6 +38,24 @@ spring:
   #  dynamic: true
   #spring.rabbitmq.virtual-host=cep-host
 
-
-
+---
+spring:
+  profiles: registration-first
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+  hostname: ${hostName}
+  statusPageUrlPath: ${management.context-path}/info
+  healthCheckUrlPath: ${management.context-path}/health
+  preferIpAddress: true
+  metadataMap:
+    instanceId: ${spring.application.name}:${server.port}
+---
+spring:
+  profiles:
+    active: config-monitor, registration-first
 

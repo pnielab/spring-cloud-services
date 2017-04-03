@@ -1,9 +1,13 @@
 server:
-  port: 8001
+  port: 8080
 ---
 spring:
   application:
-    name: tradeService
+    name: stockService
+---
+management:
+  security:
+    enabled: false
 ---
 spring:
   profiles: known-config-server
@@ -23,10 +27,14 @@ spring:
         serviceId: configserver
 hostName: localhost
 ---
-management:
-  security:
-    enabled: false
+spring:
+  profiles: development
+hostName: localhost
+---
+spring:
+  profiles: production
+hostName: localhost
 ---
 spring:
   prifiles:
-    active: registered-config-server, development
+    active: registered-config-server, development, production
