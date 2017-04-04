@@ -1,9 +1,14 @@
-package com.tikal.dtos.model;
+package com.tikal.dtos.v1;
+
+import java.io.Serializable;
 
 /**
  * Created by Pniel Abramovich
  */
-public class Stock {
+public class StockDTO implements Serializable {
+
+
+    private static final long serialVersionUID = 3480463627019607977L;
 
     private String symbol;
     private double price;
@@ -23,6 +28,10 @@ public class Stock {
     private double open;
     private String exchange;
 
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     public String getSymbol() {
         return symbol;

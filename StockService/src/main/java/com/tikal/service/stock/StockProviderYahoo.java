@@ -1,6 +1,6 @@
 package com.tikal.service.stock;
 
-import com.tikal.dtos.model.Stock;
+import com.tikal.model.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,8 +14,7 @@ import java.util.regex.Pattern;
  * Created by pniel abramovich
  */
 @RefreshScope
-@Service
-@Qualifier(value = "yahoo")
+@Service(value = "yahoo")
 public class StockProviderYahoo implements StockProvider {
 
     @Value("${yahoo.parseString}")

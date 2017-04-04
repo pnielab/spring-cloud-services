@@ -1,13 +1,14 @@
-package com.tikal.dtos;
+package com.tikal.dtos.v1;
 
-import com.tikal.dtos.model.Stock;
+import com.tikal.model.Stock;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
 /**
  * Created by Pniel Abramovich
  */
-@Service
+@Service(value = "v1StockToStockDTOConverter")
 public class StockToStockDTOConverter implements Converter<Stock, StockDTO> {
 
     @Override

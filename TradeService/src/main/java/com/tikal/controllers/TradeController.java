@@ -24,9 +24,15 @@ public class TradeController {
     @Autowired
     private Paths paths;
 
-    @RequestMapping(value = "/stock/{symbol}", method = RequestMethod.GET)
-    public String getStockBySymbol(@PathVariable(value = "symbol") String symbol) {
-        String path = String.format("http://%s%s", Paths.STOCK_SERVICE_RIBBON_NAME, paths.getStockBySymbolPath());
+    @RequestMapping(value = "/v1/stock/{symbol}", method = RequestMethod.GET)
+    public String getStockBySymbolV1(@PathVariable(value = "symbol") String symbol) {
+        String path = String.format("http://%s/%s", Paths.V1_STOCK_SERVICE_RIBBON_NAME, paths.getStockBySymbolV1Path());
+        return loadBalancer.getForObject(path, String.class, symbol);
+    }
+
+    @RequestMapping(value = "/v2/stock/{symbol}", method = RequestMethod.GET)
+    public String getStockBySymbolV2(@PathVariable(value = "symbol") String symbol) {
+        String path = String.format("http://%s/%s", Paths.V2_STOCK_SERVICE_RIBBON_NAME, paths.getStockBySymbolV2Path());
         return loadBalancer.getForObject(path, String.class, symbol);
     }
 }

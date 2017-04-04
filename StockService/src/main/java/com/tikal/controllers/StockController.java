@@ -1,7 +1,6 @@
 package com.tikal.controllers;
 
-import com.tikal.dtos.StockDTO;
-import com.tikal.dtos.model.Stock;
+import com.tikal.model.Stock;
 import com.tikal.service.stock.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -23,11 +22,22 @@ public class StockController {
     private StockService stockService;
 
     @Autowired
-    private Converter<Stock, StockDTO> StockToStockDTOConverter;
+    private Converter<Stock, com.tikal.dtos.v1.StockDTO> v1StockToStockDTOConverter;
 
-    @RequestMapping(value = "/stock/{symbol}", method = RequestMethod.GET)
-    public StockDTO getStockBySymbole(@PathVariable(value = "symbol") String symbol) {
+    @Autowired
+    private Converter<Stock, com.tikal.dtos.v2.StockDTO> v2StockToStockDTOConverter;
+
+
+    @RequestMapping(value = "/v1/stock/{symbol}", method = RequestMethod.GET)
+    public com.tikal.dtos.v1.StockDTO getV1StockBySymbole(@PathVariable(value = "symbol") String symbol) {
         Stock stock = stockService.getStockBySymbol(symbol);
-        return StockToStockDTOConverter.convert(stock);
+        return v1StockToStockDTOConverter.convert(stock);
+    }
+
+
+    @RequestMapping(value = "/v2/stock/{symbol}", method = RequestMethod.GET)
+    public com.tikal.dtos.v2.StockDTO getV2StockBySymbole(@PathVariable(value = "symbol") String symbol) {
+        Stock stock = stockService.getStockBySymbol(symbol);
+        return v2StockToStockDTOConverter.convert(stock);
     }
 }
