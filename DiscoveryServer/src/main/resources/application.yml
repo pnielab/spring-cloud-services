@@ -17,3 +17,7 @@ eureka:
     preferIpAddress: true
     metadataMap:
       instanceId: ${spring.application.name}:${server.port}
+
+endpoints:
+  shutdown:
+    enabled: true

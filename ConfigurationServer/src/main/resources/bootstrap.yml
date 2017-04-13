@@ -1,5 +1,5 @@
 server:
-  port: ${port:8888}
+  port: ${serverPort:8888}
 
 logging:
   level:
@@ -30,8 +30,8 @@ spring:
   rabbitmq:
   host: ${rabbitHost:localhost}
   port: ${rabbitPort:15672}
-  #username: guest
-  #password: guest
+  username: ${rabbitUsername:guest}
+  password: ${rabbitPassword:guest}
 
   #  dynamic: true
   #spring.rabbitmq.virtual-host=cep-host
@@ -44,7 +44,7 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: ${serviceDiscoveryPath:http://localhost:8761/eureka/}
+      defaultZone: ${serviceDiscoveryPath?:http://localhost:8761/eureka/}
   instance:
   hostname: ${hostName:localhost}
   statusPageUrlPath: ${management.context-path}/info
@@ -55,11 +55,10 @@ eureka:
 ---
 spring:
   profiles: development
-port: 8888
-serviceDiscoveryPath: http://localhost:8761/eureka/
-hostName: localhost
-rabbitHost: localhost
-rabbitPort: 15672
+serviceDiscoveryPath: ${serviceDiscoveryPath?:http://localhost:8761/eureka/}
+hostName: ${hostName:localhost}
+rabbitHost: ${rabbitHost:localhost}
+rabbitPort: ${rabbitPort:15672}
 ---
 spring:
   profiles:
