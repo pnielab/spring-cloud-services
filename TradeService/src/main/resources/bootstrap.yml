@@ -1,6 +1,15 @@
 server:
   port: ${port:8001}
+
+logging:
+  level:
+    com.tikal.controllers: 'INFO'
 ---
+#spring:
+#  profiles: vertx
+#  main:
+#    web-environment: false
+#---
 spring:
   application:
     name: tradeService
@@ -34,4 +43,6 @@ management:
 ---
 spring:
   prifiles:
-    active: registered-config-server, development
+    active: vertx, registered-config-server, development
+
+#active: servlet-container, registered-config-server, development

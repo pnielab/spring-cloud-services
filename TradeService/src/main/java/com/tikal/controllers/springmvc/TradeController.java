@@ -1,7 +1,9 @@
-package com.tikal.controllers;
+package com.tikal.controllers.springmvc;
 
+import com.tikal.controllers.Paths;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RefreshScope
 @RequestMapping(value = "/trade")
+@Profile("servlet-container")
 public class TradeController {
 
 
