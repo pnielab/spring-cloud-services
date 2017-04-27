@@ -6,10 +6,11 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.http.HttpClient;
 import io.vertx.core.http.HttpClientResponse;
-import io.vertx.core.json.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,9 @@ public class VertxHttpClient implements StockService {
     @Autowired
     private HttpClient httpClient;
 
+    @Autowired
+    private LoadBalancerClient loadBalancer;
+
 
     @Override
     public void getStockBySymbol(Message<Object> msg) {
@@ -37,7 +41,9 @@ public class VertxHttpClient implements StockService {
 
         String symbol = msg.headers().get("symbol");
         String p = paths.getStockBySymbolV1Path().replace("{symbol}", msg.headers().get("symbol"));
-        httpClient.getNow(8083, "localhost", p, new Handler<HttpClientResponse>() {
+        ServiceInstance instance = loadBalancer.choose(Paths.V1_STOCK_SERVICE_RIBBON_NAME);
+
+        httpClient.getNow(instance.getPort(), instance.getHost(), p, new Handler<HttpClientResponse>() {
 
             @Override
             public void handle(HttpClientResponse httpClientResponse) {
@@ -45,6 +51,7 @@ public class VertxHttpClient implements StockService {
                     @Override
                     public void handle(Buffer buffer) {
                         msg.reply(buffer.toString());
+
                     }
                 });
             }
