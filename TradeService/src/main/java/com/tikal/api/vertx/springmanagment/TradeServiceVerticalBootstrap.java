@@ -1,4 +1,4 @@
-package com.tikal.controllers.vertx;
+package com.tikal.api.vertx.springmanagment;
 
 import com.tikal.configuration.VertxConfiguration;
 import io.vertx.core.AbstractVerticle;
@@ -95,13 +95,13 @@ public class TradeServiceVerticalBootstrap implements ApplicationContextAware {
         Router router = Router.router(vertx);
         router.route().handler(BodyHandler.create());
         DeliveryOptions deliveryOptions = new DeliveryOptions();
-        deliveryOptions.setSendTimeout(2000);
+        deliveryOptions.setSendTimeout(20000);
 
         router.get("/trade/stock/:symbol").produces("application/json")
                 .handler(rc -> {
                     deliveryOptions.addHeader("method", "getStockBySymbol")
                             .addHeader("symbol", rc.request().getParam("symbol"));
-                    String address = String.format("com.tikal.controllers.vertx.workers.%s.TradeVerticalWorker", getVersion(rc));
+                    String address = String.format("com.tikal.api.vertx.workers.%s.TradeVerticalWorker", getVersion(rc));
                     vertx.eventBus().send(address, null, deliveryOptions, reply -> handleReplay(reply, rc));
                 });
         vertx.createHttpServer().requestHandler(router::accept).listen(vertxConfiguration.getHttpPort());

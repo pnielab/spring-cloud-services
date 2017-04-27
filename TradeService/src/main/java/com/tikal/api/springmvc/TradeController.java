@@ -1,6 +1,6 @@
-package com.tikal.controllers.springmvc;
+package com.tikal.api.springmvc;
 
-import com.tikal.controllers.Paths;
+import com.tikal.api.Paths;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Profile;

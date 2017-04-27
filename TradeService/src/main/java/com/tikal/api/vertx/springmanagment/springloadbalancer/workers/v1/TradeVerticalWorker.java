@@ -1,8 +1,9 @@
-package com.tikal.controllers.vertx.workers.v1;
+package com.tikal.api.vertx.springmanagment.springloadbalancer.workers.v1;
 
+import com.tikal.api.vertx.springmanagment.stockservice.StockService;
 import com.tikal.configuration.VertxConfiguration;
-import com.tikal.controllers.Paths;
-import com.tikal.controllers.vertx.MessageHandler;
+import com.tikal.api.Paths;
+import com.tikal.api.vertx.MessageHandler;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Context;
 import io.vertx.core.Vertx;
@@ -31,10 +32,7 @@ public class TradeVerticalWorker extends AbstractVerticle implements MessageHand
     private static final Logger logger = LoggerFactory.getLogger(TradeVerticalWorker.class);
 
     @Autowired
-    private RestTemplate loadBalancer;
-
-    @Autowired
-    private Paths paths;
+    private StockService stockService;
 
     private String id = UUID.randomUUID().toString();
 
@@ -47,7 +45,7 @@ public class TradeVerticalWorker extends AbstractVerticle implements MessageHand
     public void start() throws Exception {
         super.start();
         logger.info("register v1 trade vertical to event bus, vertical id: {}", id);
-        vertx.eventBus().consumer("com.tikal.controllers.vertx.workers.v1.TradeVerticalWorker").handler(this::handle);
+        vertx.eventBus().consumer("com.tikal.api.vertx.workers.v1.TradeVerticalWorker").handler(this::handle);
     }
 
     @Override
@@ -57,10 +55,7 @@ public class TradeVerticalWorker extends AbstractVerticle implements MessageHand
         try {
             switch (method) {
                 case "getStockBySymbol":
-                    String path = String.format("http://%s/%s", Paths.V1_STOCK_SERVICE_RIBBON_NAME, paths.getStockBySymbolV1Path());
-                    String symbol = msg.headers().get("symbol");
-                    String retVal = loadBalancer.getForObject(path, String.class, symbol);
-                    msg.reply(retVal);
+                    stockService.getStockBySymbol(msg);
                     break;
                 default:
                     logger.error("method do not exist: {}", method);

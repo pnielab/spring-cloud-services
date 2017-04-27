@@ -1,4 +1,4 @@
-package com.tikal.controllers.vertx;
+package com.tikal.api.vertx;
 
 import io.vertx.core.eventbus.Message;
 

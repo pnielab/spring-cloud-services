@@ -3,7 +3,7 @@ server:
 
 logging:
   level:
-    com.tikal.controllers: 'INFO'
+    com.tikal.api: 'INFO'
 ---
 #spring:
 #  profiles: vertx
